@@ -2,19 +2,31 @@
     <header>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
     </header>
-    <div layout="column" layout-align="center center">
-        <md-input-container md-no-float class="md-whiteframe-2dp">
+    <div layout="column" layout-align="center center" class="md-whiteframe-2dp">
+        <md-input-container md-no-float>
             <input ng-model="main.note.title" placeholder="Titulo">
         </md-input-container>
-        <md-input-container md-no-float class="md-whiteframe-2dp">
-            <input ng-model="main.note.item" placeholder="item">
+
+        <md-input-container md-no-float ng-if="main.note.title">
+            <input ng-model="main.note.item[0]" placeholder="item">
+        </md-input-container>
+
+        <md-input-container md-no-float ng-if="main.note.item[0]">
+            <input ng-model="main.note.item[1]" placeholder="item">
+        </md-input-container>
+
+        <md-input-container md-no-float ng-if="main.note.item[1]">
+            <input ng-model="main.note.item[2]" placeholder="item">
+        </md-input-container>
+
+        <md-input-container md-no-float ng-if="main.note.item[2]">
+            <input ng-model="main.note.item[3]" placeholder="item">
         </md-input-container>
 
         <md-button ng-click="main.save()">
             Salvar
         </md-button>
-        {{main.note.title}}
-        {{main.note.item}}
+
         {{main.note}}
 
     </div>
@@ -23,8 +35,10 @@
     <div layout="row">
 
         <div>
-            <p>{{main.notes.title}}</p>
-            <p>{{main.notes.item}}</p>
+            <p ng-if="main.notes.title">TITULO : {{main.notes.title}}</p>
+            <div ng-repeat="list in main.notes.item">
+                <p>ITEM : {{list}}</p>
+            </div>
 
 
         </div>

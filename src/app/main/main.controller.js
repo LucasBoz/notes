@@ -16,7 +16,6 @@
         vm.showToastr = showToastr;
 
 
-
         vm.save = function save(){
             if(vm.note) {
                 localStorage.setItem('note', JSON.stringify(vm.note));
@@ -31,6 +30,9 @@
 
         vm.getNotes = function(){
             vm.notes = JSON.parse(localStorage.getItem('note'));
+            //if(vm.notes.item){
+            //    vm.notes.item = JSON.parse(vm.notes.item);
+            //}
         };
         vm.getNotes();
 
