@@ -1,0 +1,66 @@
+<md-content layout="column" layout-fill flex>
+    <header>
+        <acme-navbar creation-date="main.creationDate"></acme-navbar>
+    </header>
+    <div layout="column" layout-align="center center">
+        <md-input-container md-no-float class="md-whiteframe-2dp">
+            <input ng-model="main.note.title" placeholder="Titulo">
+        </md-input-container>
+        <md-input-container md-no-float class="md-whiteframe-2dp">
+            <input ng-model="main.note.item" placeholder="item">
+        </md-input-container>
+
+        <md-button ng-click="main.save()">
+            Salvar
+        </md-button>
+        {{main.note.title}}
+        {{main.note.item}}
+        {{main.note}}
+
+    </div>
+
+
+    <div layout="row">
+
+        <div>
+            <p>{{main.notes.title}}</p>
+            <p>{{main.notes.item}}</p>
+
+
+        </div>
+    </div>
+
+
+    <!--<section class="jumbotron">-->
+    <!--<h1>'Allo, 'Allo!</h1>-->
+
+    <!--<p class="lead">-->
+    <!--<img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>-->
+    <!--Always a pleasure scaffolding your apps.-->
+    <!--</p>-->
+    <!--<md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.showToastr()">-->
+    <!--Splendid Toastr-->
+    <!--</md-button>-->
+    <!--<p>-->
+    <!--With ♥ thanks to the contributions of-->
+    <!--<acme-malarkey extra-values="['Yeoman', 'Gulp', 'Angular']"></acme-malarkey>-->
+    <!--</p>-->
+    <!--</section>-->
+
+    <!--<div class="techs" layout-align="center">-->
+    <!--<md-card ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">-->
+    <!--<md-card-content>-->
+    <!--<img class="pull-right" ng-src="assets/images/{{ awesomeThing.logo }}"-->
+    <!--alt="{{ awesomeThing.title }}">-->
+
+    <!--<h3 class="md-title">{{ awesomeThing.title }}</h3>-->
+
+    <!--<p>{{ awesomeThing.description }}</p>-->
+    <!--</md-card-content>-->
+    <!--<div class="md-action-buttons">-->
+    <!--<md-button ng-href="{{ awesomeThing.url }}">Website</md-button>-->
+    <!--</div>-->
+    <!--</md-card>-->
+    <!--</div>-->
+</md-content>
+
