@@ -7,13 +7,37 @@
 
 
     /** @ngInject */
-    function MainController($timeout, webDevTec, toastr, $mdToast) {
+    function MainController($timeout, webDevTec, toastr, $mdToast, $scope) {
         var vm = this;
 
         vm.awesomeThings = [];
         vm.classAnimation = '';
         vm.creationDate = 1445864494819;
         vm.showToastr = showToastr;
+
+        $scope.note = {};
+
+        $scope.note.item = [];
+
+        vm.note = $scope.note;
+
+        vm.note.item.push("");
+
+
+
+        $scope.$watchCollection('note.item', function (newValue, oldValue) {
+            if (!!newValue && !!newValue[newValue.length -1 ]) {
+                vm.note.item.push("");
+                console.log('Name changed to ' + newValue);
+            }
+
+            for (var i = 0; i < vm.note.item.length - 1; i++) {
+                if(vm.note.item[i] == ""){
+                    vm.note.item.splice(i,1) ;
+                }
+
+            }
+        });
 
 
         vm.save = function save(){
@@ -30,9 +54,6 @@
 
         vm.getNotes = function(){
             vm.notes = JSON.parse(localStorage.getItem('note'));
-            //if(vm.notes.item){
-            //    vm.notes.item = JSON.parse(vm.notes.item);
-            //}
         };
         vm.getNotes();
 
