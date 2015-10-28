@@ -9,14 +9,27 @@
         </md-input-container>
 
         <!--<md-input-container md-no-float>-->
-            <!--<input ng-model="main.note.item[0]" placeholder="item">-->
+        <!--<input ng-model="main.note.item[0]" placeholder="item">-->
         <!--</md-input-container>-->
+        <div layout="row">
+            <!--<div layout="column">-->
 
-        <div  ng-repeat="item in main.note.item track by $index">
-            <md-input-container md-no-float layout="row">
-                <md-checkbox ng-model="main.note.item[$index].done" aria-label="Done"></md-checkbox>
-                <input  ng-keyup="main.removeEmpty($index)" ng-model="main.note.item[$index].value" placeholder="item">
-            </md-input-container>
+                <!--<div ng-repeat="item in main.note.item track by $index">-->
+                    <!--<md-input-container md-no-float layout="row">-->
+                        <!--<md-checkbox ng-model="main.note.item[$index].done" aria-label="Done"></md-checkbox>-->
+                        <!--<input ng-keyup="main.removeEmpty($index)" ng-model="main.note.item[$index].value"-->
+                               <!--placeholder="item">-->
+                    <!--</md-input-container>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div layout="column">
+                <div ng-repeat="item in main.note.item track by $index">
+                    <md-input-container md-no-float layout="row">
+                        <md-checkbox ng-model="item.done" aria-label="Done"></md-checkbox>
+                        <input ng-keyup="main.removeEmpty($index)" ng-model="item.value" placeholder="item">
+                    </md-input-container>
+                </div>
+            </div>
         </div>
 
         <!--<md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.save()">-->
@@ -24,7 +37,7 @@
         <!--</md-button>-->
 
         <md-button class="md-raised" ng-click="main.save()">
-            SALVAR         {{main.newItem | json}}
+            SALVAR
         </md-button>
         {{main.note | json}}
 

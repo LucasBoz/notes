@@ -25,9 +25,10 @@
 
         vm.note = $scope.note;
 
+        vm.note.item.push(vm.newItem);
 
         vm.removeEmpty = function (index) {
-            if (vm.isEmpty(vm.note.item[index])) {
+            if (vm.note.item[index].value == "") {
                 vm.note.item.splice(index, 1);
             }
         };
@@ -41,23 +42,12 @@
             return false;
         };
 
-        $scope.$watchCollection('note.item', function (newValue, oldValue) {
-            if (vm.note.item.length == 0) {
-                vm.note.item.push("");
+
+        $scope.$watch(angular.bind(this, function () {
+            if (!!this.note.item[this.note.item.length - 1].value) {
+                vm.note.item.push({ done : false, value: ''});
             }
-
-            if ((vm.note.item.length >= 1) &&
-                (newValue[newValue.length - 1].value != "" ) &&
-                (!!newValue[newValue.length - 1].value) ) {
-
-                if (!!newValue[newValue.length - 1]) {
-                    vm.note.item.push("");
-                }
-            }
-
-
-        });
-
+        }));
 
         vm.save = function save() {
             if (vm.note) {
