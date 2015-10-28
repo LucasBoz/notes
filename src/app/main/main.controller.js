@@ -27,11 +27,22 @@
 
         vm.note.item.push(vm.newItem);
 
+
+        /**
+         * Remove um item vazio da lista
+         * a nao ser que ele seje o ultimo da lista
+         */
+
         vm.removeEmpty = function (index) {
-            if (vm.note.item[index].value == "") {
+            if (vm.note.item[index].value == "" && index != vm.note.item.length - 1) {
                 vm.note.item.splice(index, 1);
             }
         };
+
+        /**
+         * Será usado para verificar se o item está vazio
+         *ou seja, igual a um item recem criado
+         */
 
         vm.isEmpty = function (item) {
             if (item.value == vm.newItem.value) {
@@ -42,10 +53,14 @@
             return false;
         };
 
+        /**
+         * Escuta o input de item para adocionar um novo campo
+         * ao ser imputado dados
+         */
 
         $scope.$watch(angular.bind(this, function () {
             if (!!this.note.item[this.note.item.length - 1].value) {
-                vm.note.item.push({ done : false, value: ''});
+                vm.note.item.push({done: false, value: ''});
             }
         }));
 
@@ -58,11 +73,12 @@
                         .hideDelay(3500)
                 );
                 vm.getNotes();
+                console.log("SALVOU");
             }
         };
 
         vm.getNotes = function () {
-            vm.notes = JSON.parse(localStorage.getItem('note'));
+            vm.note = JSON.parse(localStorage.getItem('note'));
         };
         vm.getNotes();
 
