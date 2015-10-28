@@ -5,7 +5,7 @@
     </header>
     <div layout="column" layout-align="center center" class="md-whiteframe-2dp">
         <md-input-container md-no-float>
-            <input ng-model="main.note.title" placeholder="Titulo">
+            <input ng-model="main.note.title" ng-change="main.save()" placeholder="Titulo">
         </md-input-container>
 
         <!--<md-input-container md-no-float>-->
@@ -14,9 +14,9 @@
         <div layout="row">
 
             <div layout="column">
-                <div ng-repeat="item in main.note.item track by $index">
+                <div ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
                     <md-input-container md-no-float layout="row">
-                        <md-checkbox ng-change="main.save()" ng-model="item.done" aria-label="Done" ></md-checkbox>
+                        <md-checkbox ng-change="main.save()" ng-model="item.done" aria-label="done" ></md-checkbox>
                         <input ng-change="main.save()" ng-disabled="item.done" ng-class="{'line-through' : item.done}" ng-keyup="main.removeEmpty($index)" ng-model="item.value" placeholder="item">
                     </md-input-container>
                 </div>

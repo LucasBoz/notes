@@ -67,13 +67,7 @@
         vm.save = function save() {
             if (vm.note) {
                 localStorage.setItem('note', JSON.stringify(vm.note));
-                $mdToast.show(
-                    $mdToast.simple()
-                        .content(vm.note.title + " salvo com sucesso")
-                        .hideDelay(3500)
-                );
                 vm.getNotes();
-                console.log("SALVOU");
             }
         };
 
