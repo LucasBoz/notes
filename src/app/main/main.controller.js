@@ -64,7 +64,6 @@
 
 
         vm.openNote = function(ev, note){
-            console.log("ABREEE NOTA");
             $mdDialog.show({
                 controller: DialogController,
                 templateUrl: 'app/main/note.dialog.html',
@@ -98,8 +97,11 @@
              */
 
             $scope.removeEmpty = function (index) {
-                if (note.item[index + 1].value == "" && index != note.item.length - 1) {
-                    note.item.splice(index + 1, 1);
+                console.log("index " + index);
+                console.log(note.item[index].value);
+                console.log(note.item.length);
+                if (note.item[index ].value == "" && index != note.item.length - 1) {
+                    note.item.splice(index, 1);
                 }
             };
 
