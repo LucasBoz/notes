@@ -3,35 +3,32 @@
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
 
     </header>
-    <div layout="column" layout-align="center center" class="md-whiteframe-2dp">
-        <md-input-container md-no-float>
-            <input ng-model="main.note.title" ng-change="main.save()" placeholder="Titulo">
-        </md-input-container>
+    <div layout="column" layout-align="center start" class="md-whiteframe-2dp">
 
-        <!--<md-input-container md-no-float>-->
-        <!--<input ng-model="main.note.item[0]" placeholder="item">-->
-        <!--</md-input-container>-->
-        <div layout="row">
+        <div class="md-whiteframe-2dp" style="margin: 40px; width: 250px" ng-click="main.openNote($event, main.note)"
+                ng-init="main.openNote($event, main.note)">
 
-            <div layout="column">
-                <div ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
-                    <md-input-container md-no-float layout="row">
-                        <md-checkbox ng-change="main.save()" ng-model="item.done" aria-label="done" ></md-checkbox>
-                        <input ng-change="main.save()" ng-disabled="item.done" ng-class="{'line-through' : item.done}" ng-keyup="main.removeEmpty($index)" ng-model="item.value" placeholder="item">
-                    </md-input-container>
-                </div>
+
+            <h3>{{main.note.title}}</h3>
+
+            <div layout="row" ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
+
+                    <md-checkbox disabled ng-change="main.save()" ng-model="item.done"
+                                 aria-label="done"></md-checkbox>
+                    <p  ng-class="{'line-through' : item.done}">{{item.value}}</p>
+
             </div>
+
+            <!--<md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.save()">-->
+            <!--SALVAR-->
+            <!--</md-button>-->
+
+            <!--<md-button  ng-click="main.openNote($event, main.note)">-->
+            <!--ABRE NOTA-->
+            <!--</md-button>-->
         </div>
 
-        <!--<md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.save()">-->
-        <!--SALVAR-->
-        <!--</md-button>-->
-
-        <md-button class="md-raised" ng-click="main.save()">
-            SALVAR
-        </md-button>
         {{main.note | json}}
-        {{notes}}
 
     </div>
 

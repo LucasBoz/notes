@@ -7,7 +7,7 @@
 
 
     /** @ngInject */
-    function MainController($timeout, webDevTec, toastr, $mdToast, $scope) {
+    function MainController($timeout, webDevTec, toastr, $mdToast, $scope, $mdDialog) {
         var vm = this;
 
         vm.newItem = {
@@ -28,16 +28,7 @@
         vm.note.item.push(vm.newItem);
 
 
-        /**
-         * Remove um item vazio da lista
-         * a nao ser que ele seje o ultimo da lista
-         */
 
-        vm.removeEmpty = function (index) {
-            if (vm.note.item[index].value == "" && index != vm.note.item.length - 1) {
-                vm.note.item.splice(index, 1);
-            }
-        };
 
         /**
          * Será usado para verificar se o item está vazio
@@ -64,18 +55,58 @@
             }
         }));
 
-        vm.save = function save() {
-            if (vm.note) {
-                localStorage.setItem('note', JSON.stringify(vm.note));
-                vm.getNotes();
-            }
-        };
+
 
         vm.getNotes = function () {
             vm.note = JSON.parse(localStorage.getItem('note'));
         };
         vm.getNotes();
 
+
+        vm.openNote = function(ev, note){
+            console.log("ABREEE NOTA");
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'app/main/note.dialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                locals : {note : note},
+                clickOutsideToClose: true
+            })
+                .then(function (answer) {
+                    $scope.save();
+                }, function () {
+                    $scope.status = 'You cancelled the dialog.';
+                });
+        };
+
+
+
+        function DialogController($scope, $mdDialog , note) {
+
+            $scope.note = note;
+
+            $scope.save = function() {
+                if (note) {
+                    localStorage.setItem('note', JSON.stringify(note));
+                }
+            };
+
+            /**
+             * Remove um item vazio da lista
+             * a nao ser que ele seje o ultimo da lista
+             */
+
+            $scope.removeEmpty = function (index) {
+                if (note.item[index + 1].value == "" && index != note.item.length - 1) {
+                    note.item.splice(index + 1, 1);
+                }
+            };
+
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+        }
 
         function activate() {
             getWebDevTec();

@@ -1,0 +1,27 @@
+<md-dialog aria-label="note">
+        <md-dialog-content style="max-width:800px">
+            <div class="md-whiteframe-2dp" style="padding: 20px; width: 250px" >
+                <md-input-container md-no-float>
+                    <input ng-model="note.title" ng-change="save()" placeholder="Titulo">
+                </md-input-container>
+                <div ng-repeat="item in note.item | orderBy:'done' track by $index  ">
+                    <md-input-container md-no-float layout="row">
+
+                        <md-icon ng-if="!item.value" md-svg-icon="add"> </md-icon>
+                        <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="save()" ng-model="item.done"
+                                     aria-label="done"></md-checkbox>
+                        <input ng-change="save()" ng-disabled="item.done" ng-class="{'line-through' : item.done}"
+                               ng-keyup="removeEmpty($index)" ng-model="item.value" placeholder="Adicionar item">
+                    </md-input-container>
+                </div>
+
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+
+            <span flex></span>
+            <md-button ng-click="hide()" style="margin-right:20px;" >
+                Okay
+            </md-button>
+        </div>
+</md-dialog>
