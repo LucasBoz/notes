@@ -53,6 +53,11 @@
             if (!!this.note.item[this.note.item.length - 1].value) {
                 vm.note.item.push({done: false, value: ''});
             }
+            angular.forEach(this.note.item  , function(item , index){
+                if (item.value == "" && index != vm.note.item.length-1) {
+                    vm.note.item.splice(index, 1);
+                }
+            })
         }));
 
 
@@ -73,35 +78,19 @@
                 clickOutsideToClose: true
             })
                 .then(function (answer) {
-                    $scope.save();
                 }, function () {
-                    $scope.status = 'You cancelled the dialog.';
                 });
         };
 
 
 
-        function DialogController($scope, $mdDialog , note) {
+        function DialogController($scope, $mdDialog , $filter, note) {
 
             $scope.note = note;
 
             $scope.save = function() {
                 if (note) {
                     localStorage.setItem('note', JSON.stringify(note));
-                }
-            };
-
-            /**
-             * Remove um item vazio da lista
-             * a nao ser que ele seje o ultimo da lista
-             */
-
-            $scope.removeEmpty = function (index) {
-                console.log("index " + index);
-                console.log(note.item[index].value);
-                console.log(note.item.length);
-                if (note.item[index ].value == "" && index != note.item.length - 1) {
-                    note.item.splice(index, 1);
                 }
             };
 
