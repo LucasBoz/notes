@@ -2,6 +2,7 @@
     'use strict';
 
     angular
+
         .module('notes')
         .controller('MainController', MainController);
 
@@ -19,13 +20,15 @@
         vm.creationDate = 1445864494819;
         vm.showToastr = showToastr;
 
-        $scope.note = {};
+        $scope.note = {"item":[{"done":false,"value":" "}],"title":" ","color":"default"};
 
         $scope.note.item = [];
 
         vm.note = $scope.note;
 
-        vm.note.item.push(vm.newItem);
+        vm.note.item.push({done: false, value: 'ee', color : 'blue'});
+
+        vm.note.item.push({done: false, value: ''});
 
 
 
@@ -50,20 +53,26 @@
          */
 
         $scope.$watch(angular.bind(this, function () {
-            if (!!this.note.item[this.note.item.length - 1].value) {
-                vm.note.item.push({done: false, value: ''});
-            }
-            angular.forEach(this.note.item  , function(item , index){
-                if (item.value == "" && index != vm.note.item.length-1) {
-                    vm.note.item.splice(index, 1);
+            if(!!this.note) {
+                if (!!this.note.item[this.note.item.length - 1].value) {
+                    vm.note.item.push({done: false, value: ''});
                 }
-            })
+                angular.forEach(this.note.item  , function(item , index){
+                    if (item.value == "" && index != vm.note.item.length-1) {
+                        vm.note.item.splice(index, 1);
+                    }
+                })
+            }
         }));
 
 
 
         vm.getNotes = function () {
             vm.note = JSON.parse(localStorage.getItem('note'));
+            if( !vm.note ){
+                vm.note = {"item":[],"title":" ","color":"default"};
+                vm.note.item.push({done: false, value: ''});
+            }
         };
         vm.getNotes();
 
@@ -87,6 +96,11 @@
         function DialogController($scope, $mdDialog , $filter, note) {
 
             $scope.note = note;
+
+            $scope.alterColor = function( color ){
+                $scope.note.color = color;
+                $scope.save();
+            };
 
             $scope.save = function() {
                 if (note) {

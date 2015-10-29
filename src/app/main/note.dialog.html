@@ -1,27 +1,120 @@
-<md-dialog aria-label="note">
-        <md-dialog-content style="max-width:800px">
-            <div class="md-whiteframe-2dp" style="padding: 20px; width: 250px" >
-                <md-input-container md-no-float>
-                    <input ng-model="note.title" ng-change="save()" placeholder="Titulo">
+<md-dialog aria-label="note" md-theme="{{note.color}}" >
+    <md-dialog-content style="max-width:800px">
+        <div class="md-whiteframe-2dp" style="padding: 20px; width: 570px">
+            <md-input-container style="padding-bottom: 0px;" md-no-float>
+                <input ng-model="note.title" ng-change="save()" placeholder="Titulo">
+            </md-input-container>
+            <div ng-repeat="(key, item) in note.item | orderBy:'done' track by $index  ">
+                <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
+
+                    <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
+                    <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="save()" ng-model="item.done"
+                                 aria-label="done"></md-checkbox>
+                    <input style="width: 80%" ng-change="save()" ng-disabled="item.done"
+                           ng-class="{'line-through' : item.done}"
+                           ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
                 </md-input-container>
-                <div ng-repeat="(key, item) in note.item | orderBy:'done' track by $index  ">
-                    <md-input-container md-no-float layout="row">
-
-                        <md-icon ng-if="!item.value" md-svg-icon="add"> </md-icon>
-                        <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="save()" ng-model="item.done"
-                                     aria-label="done"></md-checkbox>
-                        <input ng-change="save()" ng-disabled="item.done" ng-class="{'line-through' : item.done}"
-                               ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
-                    </md-input-container>
-                </div>
-
             </div>
-        </md-dialog-content>
-        <div class="md-actions" layout="row">
 
-            <span flex></span>
-            <md-button ng-click="hide()" style="margin-right:20px;" >
-                Okay
+        </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+
+        <span flex></span>
+
+        <div md-theme="{{note.color}}" md-theme-watch style="width: 300px">
+            <md-button class="md-fab" class="md-primary" md-theme="{{note.color}}" md-theme-watch>
+                {{note.color}}
             </md-button>
         </div>
+        {{note.color}}
+        <md-select ng-model="ctrl.userState" aria-label="collor">
+            <md-option id="select-color" disabled>
+                <md-button class="md-fab" style="background-color: white" aria-label="white" ng-click="alterColor('default')">
+                    <md-tooltip md-direction="bottom">White</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="red" aria-label="red" ng-click="alterColor('red')">
+                    <md-tooltip md-direction="bottom">Red</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="orange" aria-label="orange" ng-click="alterColor('orange')">
+                    <md-tooltip md-direction="bottom">Orange</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="yellow" aria-label="yellow" ng-click="alterColor('yellow')">
+                    <md-tooltip md-direction="bottom">Yellow</md-tooltip>
+                </md-button>
+            </md-option>
+            <md-option id="select-color">
+                <md-button class="md-fab" md-theme="grey" aria-label="grey" ng-click="alterColor('grey')">
+                    <md-tooltip md-direction="bottom">Grey</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="blue" aria-label="blue" ng-click="alterColor('blue')">
+                    <md-tooltip md-direction="bottom">Blue</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="teal" aria-label="teal" ng-click="alterColor('teal')">
+                    <md-tooltip md-direction="bottom">Teal</md-tooltip>
+                </md-button>
+                <md-button class="md-fab" md-theme="green" aria-label="green" ng-click="alterColor('green')">
+                    <md-tooltip md-direction="bottom">Green</md-tooltip>
+                </md-button>
+            </md-option>
+        </md-select>
+
+        <!--           <md-menu >
+                       <md-button aria-label="Opções do aplicativo" class="md-icon-button" ng-click="$mdOpenMenu()">
+                           <md-icon md-svg-icon="add" ></md-icon>
+                       </md-button>
+                       <md-menu-content  width="1" id="select-color">
+
+                           &lt;!&ndash;<md-menu-item >&ndash;&gt;
+                           <div layout="row" style="">
+
+                               <md-button class="md-fab" md-theme="orange" aria-label="white">
+                                   <md-tooltip md-direction="bottom">White</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="red" aria-label="red">
+                                   <md-tooltip md-direction="bottom">Red</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="orange" aria-label="orange">
+                                   <md-tooltip md-direction="bottom">Orange</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="yellow" aria-label="yellow">
+                                   <md-tooltip md-direction="bottom">Yellow</md-tooltip>
+                               </md-button>
+                           </div>
+                           <div>
+                               <md-button class="md-fab" md-theme="" aria-label="white">
+                                   <md-tooltip md-direction="bottom">White</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="red" aria-label="red">
+                                   <md-tooltip md-direction="bottom">Red</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="orange" aria-label="orange">
+                                   <md-tooltip md-direction="bottom">Orange</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="yellow" aria-label="yellow">
+                                   <md-tooltip md-direction="bottom">Yellow</md-tooltip>
+                               </md-button>
+                           </div>
+           </md-menu-item>
+                           <md-menu-item id="select-color">
+                               <md-button class="md-fab" md-theme="grey" aria-label="grey">
+                                   <md-tooltip md-direction="bottom">Grey</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="blue" aria-label="blue">
+                                   <md-tooltip md-direction="bottom">Blue</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="teal" aria-label="teal">
+                                   <md-tooltip md-direction="bottom">Teal</md-tooltip>
+                               </md-button>
+                               <md-button class="md-fab" md-theme="green" aria-label="green">
+                                   <md-tooltip md-direction="bottom">Green</md-tooltip>
+                               </md-button>
+                           </md-menu-item>
+                       </md-menu-content>
+                   </md-menu>-->
+
+        <md-button ng-click="hide()" style="margin-right:20px;">
+            Okay
+        </md-button>
+    </div>
 </md-dialog>

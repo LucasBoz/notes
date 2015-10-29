@@ -3,29 +3,21 @@
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
 
     </header>
-    <div layout="column" layout-align="center start" class="md-whiteframe-2dp">
+    <div layout="column" layout-align="center start" class="md-whiteframe-2dp" >
 
-        <div class="md-whiteframe-2dp" style="margin: 40px; padding: 20px; width: 250px" ng-click="main.openNote($event, main.note)"
+        <div class="md-whiteframe-2dp" style="margin: 40px; padding: 20px; width: 250px"
+             ng-click="main.openNote($event, main.note)" md-theme="{{note.color}}"
                 ng-init="main.openNote($event, main.note)">
-
 
             <h3>{{main.note.title}}</h3>
 
-            <div layout="row" ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
-
-                    <md-checkbox disabled ng-change="main.save()" ng-model="item.done"
-                                 aria-label="done"></md-checkbox>
+            <div  ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
+                <div layout="row" ng-if="item.value">
+                    <md-checkbox disabled ng-model="item.done" aria-label="done"></md-checkbox>
                     <p  ng-class="{'line-through' : item.done}">{{item.value}}</p>
-
+                </div>
             </div>
 
-            <!--<md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.save()">-->
-            <!--SALVAR-->
-            <!--</md-button>-->
-
-            <!--<md-button  ng-click="main.openNote($event, main.note)">-->
-            <!--ABRE NOTA-->
-            <!--</md-button>-->
         </div>
 
         {{main.note | json}}
@@ -35,25 +27,15 @@
         <div layout="row">
 
             <div>
-                <p ng-if="main.notes.title">TITULO : {{main.notes.title}}</p>
+                <p ng-if="main.notes.title">TITULO : {{main.note.title}}</p>
 
-                <div ng-repeat="list in main.notes.item">
+                <div ng-repeat="list in main.note.item">
                     <p>ITEM : {{list}}</p>
                 </div>
             </div>
         </div>
         <div style="margin: 30px"></div>
-        <div layout="row">
 
-            <div ng-repeat="note in notes"></div>
-            <div>
-                <p>TITULO : {{note.title}}</p>
-
-                <div ng-repeat="item in note.item">
-                    <p>ITEM : {{note}}</p>
-                </div>
-            </div>
-        </div>
     </div>
     <section class="jumbotron">
         <h1></h1>

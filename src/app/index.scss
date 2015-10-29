@@ -100,3 +100,14 @@ section.jumbotron {
  */
 // injector
 // endinjector
+
+#select-color > div > button.md-fab{
+  box-shadow: none;
+  height: 24px;
+  width: 35px;
+  margin: 3px;
+}
+
+#select-color > div > button.md-fab{
+  border: 2px solid #ccc;
+}
