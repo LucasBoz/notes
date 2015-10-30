@@ -11,9 +11,15 @@
     function MainController($timeout, webDevTec, toastr, $mdToast, $scope, $mdDialog) {
         var vm = this;
 
-        vm.newItem = {
+        vm.defautItem = {
             "done": false,
             "value": ""
+        };
+
+        vm.defautNote = {
+            title : "",
+            color : 'defaut',
+            item : angular.copy( vm.defaultItem )
         };
         vm.awesomeThings = [];
         vm.classAnimation = '';
@@ -22,13 +28,37 @@
 
         $scope.note = {"item":[{"done":false,"value":" "}],"title":" ","color":"default"};
 
+        vm.newNote = {"item":[{"done":false,"value":""}],"title":"New Item","color":"default"};
+
+        vm.newNote.item.push({"item":[{"done":false,"value":""}],"title":"New Item","color":"default"});
+
+
         vm.note = $scope.note;
 
-        vm.note.item.push({done: false, value: 'ee', color : 'blue'});
+        vm.note.item.push({done: false, value: '', color : 'blue'});
 
         vm.note.item.push({done: false, value: ''});
 
+        vm.alterColor = function(color){
+            vm.newNote.color = color;
+        };
 
+
+        vm.addNewNote = function (newNote){
+            if(!!newNote){
+                vm.notes.push( angular.copy(newNote) );
+
+                localStorage.setItem('note', JSON.stringify(vm.notes));
+
+                vm.showToastr('Salvo com sucesso');
+
+                vm.newNote = angular.copy( vm.defautNote );
+
+
+            }else{
+                vm.showToastr('Problema ao salvar');
+            }
+        };
 
 
         /**
@@ -51,36 +81,46 @@
          */
 
         $scope.$watch(angular.bind(this, function () {
-            if(!!this.note) {
+            if (!!this.note && !!this.note.item) {
                 if (!!this.note.item[this.note.item.length - 1].value) {
                     vm.note.item.push({done: false, value: ''});
                 }
-                angular.forEach(this.note.item  , function(item , index){
-                    if (item.value == "" && index != vm.note.item.length-1) {
+                angular.forEach(this.note.item, function (item, index) {
+                    if (item.value == "" && index != vm.note.item.length - 1) {
                         vm.note.item.splice(index, 1);
+                    }
+                })
+            };
+            if (!!this.newNote && !!this.newNote.item) {
+                if (!!this.newNote.item[this.newNote.item.length - 1].value) {
+                    vm.newNote.item.push({done: false, value: ''});
+                }
+                angular.forEach(this.newNote.item, function (item, index) {
+                    if (item.value == "" && index != vm.newNote.item.length - 1) {
+                        vm.newNote.item.splice(index, 1);
                     }
                 })
             }
         }));
 
         vm.getNotes = function () {
-            vm.note = JSON.parse(localStorage.getItem('note'));
-            if( !vm.note ){
+            vm.notes = JSON.parse(localStorage.getItem('note'));
+            if( !vm.notes ){
+                vm.notes = [];
                 vm.note = {"item":[],"title":" ","color":"default"};
                 vm.note.item.push({done: false, value: ''});
             }
-            vm.notes = [vm.note, vm.note];
         };
         vm.getNotes();
 
 
-        vm.openNote = function(ev, note){
+        vm.openNote = function(ev, note, notes){
             $mdDialog.show({
                 controller: DialogController,
                 templateUrl: 'app/main/note.dialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                locals : {note : note},
+                locals : {note : note, notes : notes},
                 clickOutsideToClose: true
             })
                 .then(function (answer) {
@@ -90,9 +130,11 @@
 
 
 
-        function DialogController($scope, $mdDialog , $filter, note) {
+        function DialogController($scope, $mdDialog , $filter, note, notes) {
 
             $scope.note = note;
+
+            $scope.notes = notes;
 
             $scope.alterColor = function( color ){
                 $scope.note.color = color;
@@ -100,9 +142,9 @@
             };
 
             $scope.save = function() {
-                if (note) {
-                    localStorage.setItem('note', JSON.stringify(note));
-                }
+      //          if (note) {
+                    localStorage.setItem('note', JSON.stringify(notes));
+        //        }
             };
 
             $scope.hide = function() {
@@ -119,8 +161,8 @@
 
         activate();
 
-        function showToastr() {
-            toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
+        function showToastr(info) {
+            toastr.info(info);
             vm.classAnimation = '';
         }
 
