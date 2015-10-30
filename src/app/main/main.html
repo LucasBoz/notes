@@ -3,44 +3,108 @@
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
 
     </header>
-    <div layout="column" layout-align="center start" class="md-whiteframe-2dp" >
+    <div layout="row" layout-align="center start" ng-if="false">
 
-        <div class="md-whiteframe-2dp" style="margin: 40px; padding: 20px; width: 250px"
-             ng-click="main.openNote($event, main.note)" md-theme="{{note.color}}"
-                ng-init="main.openNote($event, main.note)">
+        <md-content aria-label="note" md-theme="{{note.color}}" style="border: 1px black solid">
+            <md-dialog-content style="max-width:800px">
+                <div class="md-whiteframe-2dp" style="padding: 20px; width: 570px">
+                    <md-input-container style="padding-bottom: 0px;" md-no-float>
+                        <input ng-model="note.title" ng-change="save()" placeholder="Titulo">
+                    </md-input-container>
+                    <div ng-repeat="(key, item) in note.item | orderBy:'done' track by $index  ">
+                        <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
 
+                            <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
+                            <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="save()" ng-model="item.done"
+                                         aria-label="done"></md-checkbox>
+                            <input style="width: 80%" ng-change="save()" ng-disabled="item.done"
+                                   ng-class="{'line-through' : item.done}"
+                                   ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
+                        </md-input-container>
+                    </div>
+
+                </div>
+            </md-dialog-content>
+            <div class="md-actions" style="margin-right: 30px" layout="row">
+
+                <span flex></span>
+
+                <md-select ng-model="ctrl.userState" aria-label="collor">
+                    <md-option id="select-color" disabled>
+                        <md-button class="md-fab md-primary" style="background-color: white" aria-label="white" ng-click="alterColor('default')">
+                            <md-tooltip md-direction="bottom">White</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="red" aria-label="red" ng-click="alterColor('red')">
+                            <md-tooltip md-direction="bottom">Red</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="orange" aria-label="orange" ng-click="alterColor('orange')">
+                            <md-tooltip md-direction="bottom">Orange</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="yellow" aria-label="yellow" ng-click="alterColor('yellow')">
+                            <md-tooltip md-direction="bottom">Yellow</md-tooltip>
+                        </md-button>
+                    </md-option>
+                    <md-option id="select-color">
+                        <md-button class="md-fab md-primary" md-theme="grey" aria-label="grey" ng-click="alterColor('grey')">
+                            <md-tooltip md-direction="bottom">Grey</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="blue" aria-label="blue" ng-click="alterColor('blue')">
+                            <md-tooltip md-direction="bottom">Blue</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="teal" aria-label="teal" ng-click="alterColor('teal')">
+                            <md-tooltip md-direction="bottom">Teal</md-tooltip>
+                        </md-button>
+                        <md-button class="md-fab md-primary" md-theme="green" aria-label="green" ng-click="alterColor('green')">
+                            <md-tooltip md-direction="bottom">Green</md-tooltip>
+                        </md-button>
+                    </md-option>
+                </md-select>
+
+
+                <md-button ng-click="hide()" class="md-accent md-raised" md-theme="{{note.color}}" style="margin-left:20px;">
+                    Okay
+                </md-button>
+            </div>
+        </md-content>
+
+    </div>
+
+    <div  layout="row" layout-align="start start" class="md-whiteframe-2dp" style="padding-left: 100px; padding-top: 20px;">
+
+        <div ng-repeat="note in main.notes track by $index">
+
+            <md-content class="md-whiteframe-2dp" style="margin: 16px; padding: 20px; width: 220px"
+                        ng-click="main.openNote($event, note)" md-theme="{{note.color}}">
+                <h3>{{main.note.title}}</h3>
+
+                <div ng-repeat="item in note.item | orderBy:'done' track by $index  ">
+                    <div layout="row" ng-if="item.value">
+                        <md-checkbox disabled ng-model="item.done" aria-label="done"></md-checkbox>
+                        <p ng-class="{'line-through' : item.done}">{{item.value}}</p>
+                    </div>
+                </div>
+            </md-content>
+        </div>
+    </div>
+
+<!-- WORKING
+    <div layout="column" layout-align="center start" class="md-whiteframe-2dp" style="padding-left: 100px; padding-top: 20px;">
+        <md-content class="md-whiteframe-2dp" style="margin: 16px; padding: 20px; width: 220px"
+             ng-click="main.openNote($event, main.note)" md-theme="{{main.note.color}}">
             <h3>{{main.note.title}}</h3>
-
             <div  ng-repeat="item in main.note.item | orderBy:'done' track by $index  ">
                 <div layout="row" ng-if="item.value">
                     <md-checkbox disabled ng-model="item.done" aria-label="done"></md-checkbox>
                     <p  ng-class="{'line-through' : item.done}">{{item.value}}</p>
                 </div>
             </div>
-
-        </div>
-
-        {{main.note | json}}
-
+        </md-content>
     </div>
-    <div layout="row">
-        <div layout="row">
+-->
 
-            <div>
-                <p ng-if="main.notes.title">TITULO : {{main.note.title}}</p>
 
-                <div ng-repeat="list in main.note.item">
-                    <p>ITEM : {{list}}</p>
-                </div>
-            </div>
-        </div>
-        <div style="margin: 30px"></div>
-
-    </div>
-    <section class="jumbotron">
-        <h1></h1>
-    </section>
-    <!--<p class="lead">-->
+    <!-- RESTOS vvvvvvvvvvvvvv-->
+    <!--<p class="lead">
     <!--<img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>-->
     <!--Always a pleasure scaffolding your apps.-->
     <!--</p>-->

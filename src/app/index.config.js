@@ -31,58 +31,58 @@
         $mdThemingProvider.theme('red')
             .primaryPalette('red', {
                 'default': '400'
-            }).accentPalette('red', {
-                'default': '200'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('red', {
-                'default': '500'
+                'default': '400'
             });
         $mdThemingProvider.theme('orange')
             .primaryPalette('orange', {
                 'default': '400'
-            }).accentPalette('orange', {
-                'default': '200'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('orange', {
-                'default': '500'
+                'default': '400'
             });
         $mdThemingProvider.theme('yellow')
             .primaryPalette('yellow', {
-                'default': '200'
-            }).accentPalette('yellow', {
-                'default': '200'
+                'default': '500'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('yellow', {
                 'default': '500'
             });
         $mdThemingProvider.theme('grey')
             .primaryPalette('grey', {
-                'default': '400'
-            }).accentPalette('grey', {
-                'default': '200'
-            }).backgroundPalette('grey', {
                 'default': '500'
+            }).accentPalette('blue-grey', {
+                'default': '900'
+            }).backgroundPalette('grey', {
+                'default': '300'
             });
         $mdThemingProvider.theme('blue')
             .primaryPalette('blue', {
                 'default': '400'
-            }).accentPalette('blue', {
-                'default': '200'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('blue', {
-                'default': '500'
+                'default': '400'
             });
         $mdThemingProvider.theme('teal')
             .primaryPalette('teal', {
                 'default': '400'
-            }).accentPalette('teal', {
-                'default': '200'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('teal', {
-                'default': '500'
+                'default': '400'
             });
         $mdThemingProvider.theme('green')
             .primaryPalette('green', {
                 'default': '400'
-            }).accentPalette('green', {
-                'default': '200'
+            }).accentPalette('grey', {
+                'default': '900'
             }).backgroundPalette('green', {
-                'default': '500'
+                'default': '400'
             });
 
 

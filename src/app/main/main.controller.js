@@ -22,8 +22,6 @@
 
         $scope.note = {"item":[{"done":false,"value":" "}],"title":" ","color":"default"};
 
-        $scope.note.item = [];
-
         vm.note = $scope.note;
 
         vm.note.item.push({done: false, value: 'ee', color : 'blue'});
@@ -65,14 +63,13 @@
             }
         }));
 
-
-
         vm.getNotes = function () {
             vm.note = JSON.parse(localStorage.getItem('note'));
             if( !vm.note ){
                 vm.note = {"item":[],"title":" ","color":"default"};
                 vm.note.item.push({done: false, value: ''});
             }
+            vm.notes = [vm.note, vm.note];
         };
         vm.getNotes();
 
