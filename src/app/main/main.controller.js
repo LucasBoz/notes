@@ -102,6 +102,7 @@
         vm.openNote = function(ev, note, notes){
             $mdDialog.show({
                 controller: DialogController,
+                controllerAs: 'dialog',
                 templateUrl: 'app/main/note.dialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
