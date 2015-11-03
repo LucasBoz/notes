@@ -9,54 +9,49 @@
 
     /** @ngInject */
     function MainController($timeout, webDevTec, toastr, $mdToast, $scope, $mdDialog) {
+
         var vm = this;
 
-        vm.defautItem = {
-            "done": false,
-            "value": ""
-        };
-
-        vm.defautNote = {
-            title : "",
-            color : 'defaut',
-            item : angular.copy( vm.defaultItem )
-        };
+        /**
+         * Atributos do main
+         *
+         */
         vm.awesomeThings = [];
         vm.classAnimation = '';
         vm.creationDate = 1445864494819;
         vm.showToastr = showToastr;
 
-        $scope.note = {"item":[{"done":false,"value":" "}],"title":" ","color":"default"};
 
-        vm.newNote = {"item":[{"done":false,"value":""}],"title":"New Item","color":"default"};
+        vm.defautNote = {
+            title : "",
+            color : 'blue',
+            item :
+                [
+                    {
+                        "done": false,
+                        "value": ""
+                    }
+                ]
+        };
 
-        vm.newNote.item.push({"item":[{"done":false,"value":""}],"title":"New Item","color":"default"});
-
-
-        vm.note = $scope.note;
-
-        vm.note.item.push({done: false, value: '', color : 'blue'});
-
-        vm.note.item.push({done: false, value: ''});
+        vm.newNote = angular.copy( vm.defautNote );
 
         vm.alterColor = function(color){
             vm.newNote.color = color;
         };
 
-
         vm.addNewNote = function (newNote){
-            if(!!newNote){
+            if(newNote.title || newNote.item[0].value){
                 vm.notes.push( angular.copy(newNote) );
 
-                localStorage.setItem('note', JSON.stringify(vm.notes));
+                localStorage.setItem('note', angular.toJson(vm.notes));
 
                 vm.showToastr('Salvo com sucesso');
 
                 vm.newNote = angular.copy( vm.defautNote );
 
-
             }else{
-                vm.showToastr('Problema ao salvar');
+                vm.showToastr('Adicione algum valor a nota');
             }
         };
 
@@ -80,22 +75,12 @@
          * ao ser imputado dados
          */
 
-        $scope.$watch(angular.bind(this, function () {
-            if (!!this.note && !!this.note.item) {
-                if (!!this.note.item[this.note.item.length - 1].value) {
-                    vm.note.item.push({done: false, value: ''});
-                }
-                angular.forEach(this.note.item, function (item, index) {
-                    if (item.value == "" && index != vm.note.item.length - 1) {
-                        vm.note.item.splice(index, 1);
-                    }
-                })
-            };
-            if (!!this.newNote && !!this.newNote.item) {
-                if (!!this.newNote.item[this.newNote.item.length - 1].value) {
+        $scope.$watch(angular.bind(vm, function () {
+            if (vm.newNote && vm.newNote.item) {
+                if (vm.newNote.item[vm.newNote.item.length - 1].value) {
                     vm.newNote.item.push({done: false, value: ''});
                 }
-                angular.forEach(this.newNote.item, function (item, index) {
+                angular.forEach(vm.newNote.item, function (item, index) {
                     if (item.value == "" && index != vm.newNote.item.length - 1) {
                         vm.newNote.item.splice(index, 1);
                     }
@@ -104,11 +89,11 @@
         }));
 
         vm.getNotes = function () {
-            vm.notes = JSON.parse(localStorage.getItem('note'));
-            if( !vm.notes ){
+            if(localStorage.getItem('note')) {
+                vm.notes = angular.fromJson(localStorage.getItem('note'));
+            }
+            if (!vm.notes) {
                 vm.notes = [];
-                vm.note = {"item":[],"title":" ","color":"default"};
-                vm.note.item.push({done: false, value: ''});
             }
         };
         vm.getNotes();
@@ -123,33 +108,54 @@
                 locals : {note : note, notes : notes},
                 clickOutsideToClose: true
             })
-                .then(function (answer) {
+                .then(function () {
                 }, function () {
                 });
         };
 
 
 
-        function DialogController($scope, $mdDialog , $filter, note, notes) {
+        function DialogController($scope, $mdDialog, note, notes) {
 
-            $scope.note = note;
+            console.log("XXX" + note.title);
 
-            $scope.notes = notes;
+            var vm = this;
 
-            $scope.alterColor = function( color ){
-                $scope.note.color = color;
-                $scope.save();
+            vm.note = note;
+
+            vm.notes = notes;
+
+            vm.alterColor = function( color ){
+                vm.note.color = color;
+                vm.save();
             };
 
-            $scope.save = function() {
-      //          if (note) {
-                    localStorage.setItem('note', JSON.stringify(notes));
-        //        }
+            vm.save = function () {
+                  localStorage.setItem('note',angular.toJson(notes));
             };
 
-            $scope.hide = function() {
+            vm.delete = function (){
+                vm.notes.splice( notes.indexOf(note) , 1 );
+                vm.save();
+                vm.hide();
+            };
+
+            vm.hide = function() {
                 $mdDialog.hide();
             };
+
+            $scope.$watch(angular.bind(vm.note, function () {
+                if (vm.note && vm.note.item) {
+                    if (vm.note.item[vm.note.item.length - 1].value) {
+                      vm.note.item.push({done: false, value: ''});
+                    }
+                    angular.forEach(vm.note.item, function (item, index) {
+                        if (item.value == "" && index != vm.note.item.length - 1) {
+                          vm.note.item.splice(index, 1);
+                        }
+                    })
+                }
+            }));
         }
 
         function activate() {

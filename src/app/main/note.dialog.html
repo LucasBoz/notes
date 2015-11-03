@@ -1,6 +1,6 @@
 <md-dialog aria-label="note" md-theme="{{note.color}}" >
     <md-dialog-content style="max-width:800px">
-        <div class="md-whiteframe-2dp" style="padding: 20px; width: 570px">
+        <div style="padding: 20px; width: 570px">
             <md-input-container style="padding-bottom: 0px;" md-no-float>
                 <input ng-model="note.title" ng-change="save()" placeholder="Titulo">
             </md-input-container>
@@ -21,6 +21,10 @@
     <div class="md-actions" style="margin-right: 30px" layout="row">
 
         <span flex></span>
+
+        <md-button ng-click="delete()">
+          Delete
+        </md-button>
 
         <md-select ng-model="ctrl.userState" aria-label="collor">
             <md-option id="select-color" disabled>

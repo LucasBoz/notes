@@ -34,7 +34,7 @@
             }).accentPalette('grey', {
                 'default': '900'
             }).backgroundPalette('red', {
-                'default': '400'
+                'default': '500'
             });
         $mdThemingProvider.theme('orange')
             .primaryPalette('orange', {
@@ -42,7 +42,7 @@
             }).accentPalette('grey', {
                 'default': '900'
             }).backgroundPalette('orange', {
-                'default': '400'
+                'default': '500'
             });
         $mdThemingProvider.theme('yellow')
             .primaryPalette('yellow', {
@@ -64,9 +64,9 @@
             .primaryPalette('blue', {
                 'default': '400'
             }).accentPalette('grey', {
-                'default': '900'
+                'default': '600'
             }).backgroundPalette('blue', {
-                'default': '400'
+                'default': '50'
             });
         $mdThemingProvider.theme('teal')
             .primaryPalette('teal', {

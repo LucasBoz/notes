@@ -1,17 +1,18 @@
-<md-content layout="column" layout-fill flex>
-    <header>
+<md-content layout="column" layout-fill flex  md-theme="grey">
+    <header md-theme="dark-blue">
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
 
     </header>
     <div layout="row" layout-align="center start">
 
-        <md-content aria-label="main.newNote" md-theme="{{main.newNote.color}}" style="border: 1px black solid">
+        <md-content aria-label="main.newNote" md-theme="{{main.newNote.color}}"  class="md-whiteframe-12dp" style="margin-top: 25px">
             <md-dialog-content style="max-width:800px">
-                <div class="md-whiteframe-2dp" style="padding: 20px; width: 570px">
+                <div style="padding: 20px; width: 570px">
                     <md-input-container style="padding-bottom: 0px;" md-no-float>
                         <input ng-model="main.newNote.title" placeholder="Titulo">
                     </md-input-container>
-                    <div ng-repeat="(key, item) in main.newNote.item | orderBy:'done' track by $index  ">
+                    <div ng-repeat="(key, item) in main.newNote.item | orderBy:'done'  track by $index  ">
+                    <!--<div ng-repeat="(key, item) in main.newNote.item track by $index  ">-->
                         <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
 
                             <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
@@ -61,19 +62,21 @@
                 </md-select>
 
 
-                <md-button ng-click="main.addNewNote(main.newNote)" class="md-accent md-raised" md-theme="{{note.color}}" style="margin-left:20px;">
+                <md-button ng-click="main.addNewNote(main.newNote)" class="md-accent md-raised" md-theme="{{main.newNote.color}}" style="margin-left:20px;">
                     SALVAR
                 </md-button>
+
             </div>
         </md-content>
 
     </div>
-    {{main.newNote}}
-    <div  layout="row" layout-align="start start" class="md-whiteframe-2dp" style="padding-left: 100px; padding-top: 20px;">
+    <div  layout="row" layout-align="start start" style="padding-left: 100px; padding-top: 20px;">
+
+
 
         <div ng-repeat="note in main.notes track by $index">
 
-            <md-content class="md-whiteframe-2dp" style="margin: 16px; padding: 20px; width: 220px"
+            <md-content class="md-whiteframe-4dp" style="margin: 16px; padding: 20px; width: 220px"
                         ng-click="main.openNote($event, note, main.notes)" md-theme="{{note.color}}">
                 <h3 style="margin: 0">{{note.title}}</h3>
 
@@ -87,7 +90,7 @@
         </div>
     </div>
     <DIV flex></DIV>
-    {{main.notes[1]}}
+
 <!-- WORKING
     <div layout="column" layout-align="center start" class="md-whiteframe-2dp" style="padding-left: 100px; padding-top: 20px;">
         <md-content class="md-whiteframe-2dp" style="margin: 16px; padding: 20px; width: 220px"
