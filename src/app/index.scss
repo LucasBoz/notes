@@ -111,3 +111,10 @@ section.jumbotron {
 #select-color > div > button.md-fab{
   border: 2px solid #ccc;
 }
+
+.item-list {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

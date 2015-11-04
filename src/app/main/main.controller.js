@@ -24,7 +24,7 @@
 
         vm.defautNote = {
             title : "",
-            color : 'blue',
+            color : 'white',
             item :
                 [
                     {
