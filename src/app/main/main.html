@@ -20,7 +20,7 @@
                             <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
                             <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-model="item.done"
                                          aria-label="done"></md-checkbox>
-                            <input style="width: 80%" ng-disabled="item.done"
+                            <input ng-change="main.watch(item)" style="width: 80%" ng-disabled="item.done"
                                    ng-class="{'line-through' : item.done}"
                                    ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
                         </md-input-container>
@@ -73,9 +73,10 @@
         </md-content>
 
     </div>
-    <md-grid-list  layout="row" layout-align="center start" style="padding-left: 5%; padding-top: 20px"
+    <md-grid-list  layout="row" layout-align="center start" 
+                   style="padding-left: 5%; padding-top: 20px"
                    md-cols-gt-md="5" md-cols-md="2" md-cols-sm="1"
-                   md-row-height-gt-md="1:1" md-row-height="3:4"
+                   md-row-height="4:3"
                    md-gutter="10px" >
 
         <md-grid-tile ng-repeat="note in main.notes track by $index">
@@ -127,4 +128,3 @@
     <!--</md-card>-->
     <!--</div>-->
 </md-content>
-

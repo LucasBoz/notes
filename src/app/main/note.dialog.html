@@ -8,9 +8,9 @@
         <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
 
           <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
-          <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="save()" ng-model="item.done"
+          <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="dialog.save()" ng-model="item.done"
                        aria-label="done"></md-checkbox>
-          <input style="width: 80%" ng-change="save()" ng-disabled="item.done"
+          <input style="width: 80%" ng-change="dialog.save(); dialog.watch(item)"  ng-disabled="item.done"
                  ng-class="{'line-through' : item.done}"
                  ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
         </md-input-container>

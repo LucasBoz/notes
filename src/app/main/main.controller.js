@@ -22,6 +22,16 @@
         vm.showToastr = showToastr;
 
 
+        vm.defautItem = {
+             item :
+                [
+                    {
+                        "done": false,
+                        "value": ""
+                    }
+                ]
+        }
+
         vm.defautNote = {
             title : "",
             color : 'white',
@@ -75,6 +85,19 @@
          * ao ser imputado dados
          */
 
+        vm.watch = function(item) {
+            if(  vm.newNote.item.indexOf(item) ==  vm.newNote.item.length - 1 ){
+                if ( vm.newNote.item[ vm.newNote.item.length - 1].value) {
+                    vm.newNote.item.push( {done: false, value: ''});
+                    //vm.newNote.item.push( angular.copy( vm.defautItem );
+                }
+            }
+            if ( item.value == "" &&  vm.newNote.item.indexOf(item) !=  vm.newNote.item.length - 1) {
+                 vm.newNote.item.splice(  vm.newNote.item.indexOf(item), 1);
+            }
+        };
+        
+        /*
         $scope.$watch(angular.bind(vm, function () {
             if (vm.newNote && vm.newNote.item) {
                 if (vm.newNote.item[vm.newNote.item.length - 1].value) {
@@ -86,7 +109,10 @@
                     }
                 })
             }
-        }));
+        }));*/
+
+
+
 
         vm.getNotes = function () {
             if(localStorage.getItem('note')) {
@@ -118,13 +144,15 @@
 
         function DialogController($scope, $mdDialog, note, notes) {
 
-            console.log("XXX" + note.title);
-
             var vm = this;
 
             vm.note = note;
 
             vm.notes = notes;
+
+            if (note.item[note.item.length - 1].value) {
+                note.item.push({done: false, value: ''});
+            }
 
             vm.alterColor = function( color ){
                 vm.note.color = color;
@@ -145,7 +173,18 @@
                 $mdDialog.hide();
             };
 
-            $scope.$watch(angular.bind(vm.note, function () {
+            vm.watch = function(item) {
+                if( note.item.indexOf(item) == note.item.length - 1 ){
+                    if (note.item[note.item.length - 1].value) {
+                      note.item.push({done: false, value: ''});
+                    }
+                }
+                if (item.value == "" && note.item.indexOf(item) != note.item.length - 1) {
+                    note.item.splice( note.item.indexOf(item), 1);
+                }
+            };
+
+     /*       $scope.$watch(angular.bind(vm.note, function () {
                 if (vm.note && vm.note.item) {
                     if (vm.note.item[vm.note.item.length - 1].value) {
                       vm.note.item.push({done: false, value: ''});
@@ -156,7 +195,7 @@
                         }
                     })
                 }
-            }));
+            }));*/
         }
 
         function activate() {
