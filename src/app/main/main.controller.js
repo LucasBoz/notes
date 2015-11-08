@@ -20,16 +20,11 @@
         vm.classAnimation = '';
         vm.creationDate = 1445864494819;
         vm.showToastr = showToastr;
-
+        vm.showNoteFields = false;
 
         vm.defautItem = {
-             item :
-                [
-                    {
-                        "done": false,
-                        "value": ""
-                    }
-                ]
+            done: false, 
+            value: ''
         }
 
         vm.defautNote = {
@@ -45,6 +40,11 @@
         };
 
         vm.newNote = angular.copy( vm.defautNote );
+
+
+        vm.showNewNote = function(){
+            vm.showNoteFields = true;
+        }
 
         vm.alterColor = function(color){
             vm.newNote.color = color;
@@ -88,8 +88,8 @@
         vm.watch = function(item) {
             if(  vm.newNote.item.indexOf(item) ==  vm.newNote.item.length - 1 ){
                 if ( vm.newNote.item[ vm.newNote.item.length - 1].value) {
-                    vm.newNote.item.push( {done: false, value: ''});
-                    //vm.newNote.item.push( angular.copy( vm.defautItem );
+                  //  vm.newNote.item.push( {done: false, value: ''});
+                    vm.newNote.item.push( angular.copy( vm.defautItem ));
                 }
             }
             if ( item.value == "" &&  vm.newNote.item.indexOf(item) !=  vm.newNote.item.length - 1) {

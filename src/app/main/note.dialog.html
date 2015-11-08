@@ -1,18 +1,18 @@
-<md-dialog aria-label="note" md-theme="{{dialog.note.color}}" style="overflow-y: hidden">
-  <md-dialog-content style="max-width:800px">
+<md-dialog aria-label="note" md-theme="{{dialog.note.color}}" style="overflow-x: hidden">
+  <md-dialog-content style="max-width:800px; overflow-x: hidden">
     <div style="padding: 20px; width: 570px">
       <md-input-container style="padding-bottom: 0px;" md-no-float>
         <input ng-model="dialog.note.title" ng-change="dialog.save()" placeholder="Titulo">
       </md-input-container>
       <div ng-repeat="(key, item) in dialog.note.item | orderBy:'done' track by $index  ">
-        <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
+        <md-input-container  style="padding-bottom: 0px;" md-no-float layout="row">
 
-          <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
-          <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="dialog.save()" ng-model="item.done"
+          <md-icon style="color : red" ng-if="!item.value" md-svg-icon="add"></md-icon>
+          <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-change="dialog.save()" ng-model="item.done" class="md-accent" style="margin: 0"
                        aria-label="done"></md-checkbox>
-          <input style="width: 80%" ng-change="dialog.save(); dialog.watch(item)"  ng-disabled="item.done"
+          <input style="width: 80%" class="md-accent" ng-change="dialog.save(); dialog.watch(item)"  ng-disabled="item.done"
                  ng-class="{'line-through' : item.done}"
-                 ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
+                 ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Item da lista">
         </md-input-container>
       </div>
 

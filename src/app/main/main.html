@@ -8,26 +8,26 @@
     </header>
     <div layout="row" layout-align="center start">
 
-        <md-content aria-label="main.newNote" md-theme="{{main.newNote.color}}"  class="md-whiteframe-12dp"
+        <md-content ng-click="main.showNewNote()" aria-label="main.newNote" md-theme="{{main.newNote.color}}"  class="md-whiteframe-12dp"
                     style="margin-top: 25px; border-radius: 5px; padding: 20px; width: 50%; max-width: 570px">
 
 
                     <md-input-container style="padding-bottom: 0px;" md-no-float>
                         <input ng-model="main.newNote.title" placeholder="Titulo">
                     </md-input-container>
-                    <div ng-repeat="(key, item) in main.newNote.item | orderBy:'done'  track by $index  ">
+                    <div ng-if="main.showNoteFields" ng-repeat="(key, item) in main.newNote.item | orderBy:'done'  track by $index  ">
                         <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
                             <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
                             <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-model="item.done"
                                          aria-label="done"></md-checkbox>
                             <input ng-change="main.watch(item)" style="width: 80%" ng-disabled="item.done"
                                    ng-class="{'line-through' : item.done}"
-                                   ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Adicionar item">
+                                   ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Item da lista">
                         </md-input-container>
                     </div>
 
 
-            <div class="md-actions" style="margin-right: 30px;" layout="row" >
+            <div ng-if="main.showNoteFields" class="md-actions" style="margin-right: 30px;" layout="row" >
 
                 <span flex></span>
                 <md-input-container style="padding: 0">
@@ -73,33 +73,35 @@
         </md-content>
 
     </div>
+
     <md-grid-list  layout="row" layout-align="center start" 
                    style="padding-left: 5%; padding-top: 20px"
                    md-cols-gt-md="5" md-cols-md="2" md-cols-sm="1"
                    md-row-height="4:3"
                    md-gutter="10px" >
 
-        <md-grid-tile ng-repeat="note in main.notes track by $index">
+        <md-grid-tile ng-repeat="note in main.notes track by $index" style="border: 1px blue solid">
 
-            <md-content class="md-whiteframe-4dp" style="margin: 16px; padding: 20px; width: 220px; border-radius: 5px"
+            <md-content class="md-whiteframe-4dp" style="padding: 20px;padding-top:5px; width: 220px; border-radius: 5px"
                         ng-click="main.openNote($event, note, main.notes)" md-theme="{{note.color}}">
-                <h3 style="margin: 0" class="item-list">{{note.title}}</h3>
+                <h3 style="margin: 0; margin-bottom: 15px " class="item-list">{{note.title}}</h3>
 
                 <div ng-repeat="item in note.item | orderBy:'done' track by $index  ">
                     <div layout="row" ng-if="item.value">
-                        <md-checkbox disabled ng-model="item.done" aria-label="done"></md-checkbox>
-                        <p ng-class="{'line-through' : item.done} " class="item-list " style="margin: 9px">{{item.value}}</p>
+                        <md-checkbox disabled ng-model="item.done" aria-label="done" style="margin: 0"></md-checkbox>
+                        <span ng-class="{'line-through' : item.done} " class="item-list" style="margin: 0; height: 22px;">{{item.value}}</span>
                     </div>
                 </div>
             </md-content>
         </md-grid-tile>
     </md-grid-list>
+
     <DIV flex></DIV>
 
 
 
     <!-- RESTOS vvvvvvvvvvvvvv-->
-    <!--<p class="lead">
+    <!--<p class="lead">-->
     <!--<img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>-->
     <!--Always a pleasure scaffolding your apps.-->
     <!--</p>-->
