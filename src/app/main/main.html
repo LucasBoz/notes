@@ -9,21 +9,28 @@
     <div layout="row" layout-align="center start">
 
         <md-content ng-click="main.showNewNote()" aria-label="main.newNote" md-theme="{{main.newNote.color}}"  class="md-whiteframe-12dp"
-                    style="margin-top: 25px; border-radius: 5px; padding: 20px; width: 50%; max-width: 570px">
+                    style="margin-top: 25px; border-radius: 2px; padding: 20px; width: 50%; max-width: 570px">
 
 
                     <md-input-container style="padding-bottom: 0px;" md-no-float>
                         <input ng-model="main.newNote.title" placeholder="Titulo">
                     </md-input-container>
-                    <div ng-if="main.showNoteFields" ng-repeat="(key, item) in main.newNote.item | orderBy:'done'  track by $index  ">
-                        <md-input-container style="padding-bottom: 0px;" md-no-float layout="row">
-                            <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
-                            <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-model="item.done"
-                                         aria-label="done"></md-checkbox>
-                            <input ng-change="main.watch(item)" style="width: 80%" ng-disabled="item.done"
-                                   ng-class="{'line-through' : item.done}"
-                                   ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Item da lista">
-                        </md-input-container>
+                    <div ng-if="main.showNoteFields" ng-repeat="(key, item) in main.newNote.item | orderBy:'done'  track by $index">
+                        <div layout="row" style="width:100%">
+                            <md-input-container style="padding-bottom: 0px;width:75%" md-no-float layout="row">
+                                <md-icon ng-if="!item.value" md-svg-icon="add"></md-icon>
+                                <md-checkbox ng-if="item.value" ng-disabled="!item.value" ng-model="item.done"
+                                             aria-label="done"></md-checkbox>
+                                <input ng-change="main.watch(item)" style="width:80%" ng-disabled="item.done"
+                                       ng-class="{'line-through' : item.done}"
+                                       ng-keyup="removeEmpty(item)" ng-model="item.value" placeholder="Item da lista">
+
+                               
+                            </md-input-container> 
+                            <md-button ng-if="item.value" ng-click="main.deleteItem(item)">
+                                 D
+                            </md-button>
+                       </div>
                     </div>
 
 
@@ -82,7 +89,7 @@
 
         <md-grid-tile ng-repeat="note in main.notes track by $index" style="border: 1px blue solid">
 
-            <md-content class="md-whiteframe-4dp" style="padding: 20px;padding-top:5px; width: 220px; border-radius: 5px"
+            <md-content class="md-whiteframe-4dp" style="padding: 20px;padding-top:5px; width: 220px; border-radius: 2px"
                         ng-click="main.openNote($event, note, main.notes)" md-theme="{{note.color}}">
                 <h3 style="margin: 0; margin-bottom: 15px " class="item-list">{{note.title}}</h3>
 

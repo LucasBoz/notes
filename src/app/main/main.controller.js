@@ -22,6 +22,8 @@
         vm.showToastr = showToastr;
         vm.showNoteFields = false;
 
+        vm.showDelete = false;
+
         vm.defautItem = {
             done: false, 
             value: ''
@@ -49,6 +51,10 @@
         vm.alterColor = function(color){
             vm.newNote.color = color;
         };
+
+        vm.deleteItem = function(item){
+            vm.newNote.item.splice(  vm.newNote.item.indexOf(item), 1);
+        }
 
         vm.addNewNote = function (newNote){
             if(newNote.title || newNote.item[0].value){
@@ -158,6 +164,10 @@
                 vm.note.color = color;
                 vm.save();
             };
+
+            vm.deleteItem = function(item){
+                note.item.splice( note.item.indexOf(item), 1);
+            }
 
             vm.save = function () {
                   localStorage.setItem('note',angular.toJson(notes));

@@ -130,11 +130,11 @@
         'default': '400'
       });
     $mdThemingProvider.theme('green')
-      .primaryPalette('green', {
+      .primaryPalette('lime', {
         'default': '400'
       }).accentPalette('grey', {
         'default': '900'
-      }).backgroundPalette('green', {
+      }).backgroundPalette('lime', {
         'default': '400'
       });
 
