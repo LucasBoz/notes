@@ -7,6 +7,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var deploy      = require('gulp-gh-pages');
 var wrench = require('wrench');
 
 /**
@@ -26,4 +27,13 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
  */
 gulp.task('default', ['clean'], function () {
   gulp.start('build');
+});
+
+
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', function () {
+  return gulp.src("./dist/**/*")
+    .pipe(deploy())
 });
