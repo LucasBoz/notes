@@ -7,7 +7,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var deploy      = require('gulp-gh-pages');
+var deploy = require('gulp-gh-pages');
 var wrench = require('wrench');
 
 /**
@@ -33,7 +33,12 @@ gulp.task('default', ['clean'], function () {
 /**
  * Push build to gh-pages
  */
+var options = { 
+    remoteUrl: "https://github.com/lucasboz/notes.git",
+    branch: "master"
+};
+
 gulp.task('deploy', function () {
-  return gulp.src("./dist/**/*")
-    .pipe(deploy())
+    gulp.src("dist/**/*.*")
+        .pipe(deploy(options));
 });
